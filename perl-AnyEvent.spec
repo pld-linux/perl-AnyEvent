@@ -6,7 +6,7 @@
 %define		pdir	AnyEvent
 %define		pnam	AnyEvent
 Summary:	AnyEvent - provide framework for multiple event loops
-Summary(pl):	AnyEvent - szkielet dla wielu pêtli zdarzeñ
+Summary(pl.UTF-8):   AnyEvent - szkielet dla wielu pÄ™tli zdarzeÅ„
 Name:		perl-AnyEvent
 Version:	1.02
 Release:	1
@@ -25,9 +25,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The AnyEvent extension aims to provide an simple and optimized event
 loop for a broad class of applications.
 
-%description -l pl
-Rozszerzenie AnyEvent ma za zadanie udostêpniæ pojedyncz± i
-zoptymalizowan± pêtlê zdarzeñ dla szerokiej gamy aplikacji.
+%description -l pl.UTF-8
+Rozszerzenie AnyEvent ma za zadanie udostÄ™pniÄ‡ pojedynczÄ… i
+zoptymalizowanÄ… pÄ™tlÄ™ zdarzeÅ„ dla szerokiej gamy aplikacji.
 
 %prep
 %setup -q -n %{pnam}-%{version}
