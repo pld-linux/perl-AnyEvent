@@ -6,7 +6,7 @@
 %define		pdir	AnyEvent
 %define		pnam	AnyEvent
 Summary:	AnyEvent - provide framework for multiple event loops
-Summary(pl.UTF-8):   AnyEvent - szkielet dla wielu pętli zdarzeń
+Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	1.02
 Release:	1
