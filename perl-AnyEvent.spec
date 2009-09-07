@@ -32,6 +32,8 @@ zoptymalizowaną pętlę zdarzeń dla szerokiej gamy aplikacji.
 
 %prep
 %setup -q -n %{pnam}-%{version}
+#we are not allowed to use network while building package
+%{__rm} t/05_dns.t
 
 %build
 %{__perl} Makefile.PL \
