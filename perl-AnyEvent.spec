@@ -9,7 +9,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	5.251
-Release:	2
+Release:	3
 Epoch:		2
 # same as perl
 License:	GPL v1+ or Artistic
@@ -32,8 +32,13 @@ zoptymalizowaną pętlę zdarzeń dla szerokiej gamy aplikacji.
 
 %prep
 %setup -q -n %{pnam}-%{version}
-#we are not allowed to use network while building package
+# we are not allowed to use network while building package
 %{__rm} t/05_dns.t
+
+# satisfy rpm version deps, we have 3.9 in repo
+# $ rpmvercmp 3.44 3.9
+# 3.44 > 3.9
+%{__sed} -i -e 's/use EV 3.44/use EV 3.5/' lib/AnyEvent/Impl/EV.pm
 
 %build
 %{__perl} Makefile.PL \
