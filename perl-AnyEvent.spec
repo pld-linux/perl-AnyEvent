@@ -8,14 +8,14 @@
 Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
-Version:	5.251
-Release:	3
-Epoch:		2
+Version:	5.31
+Release:	1
+Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://search.cpan.org/CPAN/authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
-# Source0-md5:	86457e3a7403976997193d2fc027482e
+Source0:	http://www.cpan.org/modules/by-authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
+# Source0-md5:	9c13447a7117e06e7a2fd553c4b2228c
 URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -59,7 +59,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changes README
-%{perl_vendorlib}/AnyEvent.pm
-%{perl_vendorlib}/AnyEvent
-%{perl_vendorlib}/AE.pm
-%{_mandir}/man3/*
+%{perl_vendorarch}/AnyEvent.pm
+%{perl_vendorarch}/AnyEvent
+%{perl_vendorarch}/AE.pm
+%{_mandir}/man3/AE.3pm*
+%{_mandir}/man3/AnyEvent*.3pm*
