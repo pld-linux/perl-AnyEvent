@@ -1,3 +1,5 @@
+# TODO:
+# - incorrectly installs itself to perl_vendorarch, but only constants.pl should go there
 #
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
@@ -9,7 +11,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	5.31
-Release:	2
+Release:	3
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
@@ -20,7 +22,6 @@ URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 Suggests:	%{name}-Impl-EV
-BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
