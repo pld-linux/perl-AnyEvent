@@ -11,7 +11,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	5.31
-Release:	3
+Release:	4
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
@@ -24,6 +24,9 @@ BuildRequires:	rpm-perlprov >= 4.1-13
 Suggests:	%{name}-Impl-EV
 Obsoletes:	perl-AnyEvent-Impl-Cocoa
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# disable debuginfo, nothing special there
+%define		_enable_debug_packages	0
 
 %description
 The AnyEvent extension aims to provide an simple and optimized event
