@@ -22,6 +22,7 @@ URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 Suggests:	%{name}-Impl-EV
+Obsoletes:	perl-AnyEvent-Impl-Cocoa
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,85 +33,116 @@ loop for a broad class of applications.
 Rozszerzenie AnyEvent ma za zadanie udostępnić pojedynczą i
 zoptymalizowaną pętlę zdarzeń dla szerokiej gamy aplikacji.
 
-%package Impl-Cocoa
-Summary:	AnyEvent implementation based on Cocoa::EventLoop
-Group:		Development/Languages/Perl
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description Impl-Cocoa
-AnyEvent implementation based on Cocoa::EventLoop..
-
 %package Impl-EV
 Summary:	AnyEvent implementation based on libev
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na libev
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-EV
 AnyEvent implementation based on libev (best choice).
 
+%description Impl-EV -l pl.UTF-8
+Implementacja AnyEvent oparta na libev (najlepszy wybór).
+
 %package Impl-Event
 Summary:	AnyEvent implementation based on Event
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na module Event
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-Event
 AnyEvent implementation based on Event (very stable, few glitches).
 
+%description Impl-Event -l pl.UTF-8
+Implementacja AnyEvent oparta na module Event (stabilna, z kilkoma
+problemami).
+
 %package Impl-EventLib
-Summary:	AnyEvent implementation based on EventLib
+Summary:	AnyEvent implementation based on Event::Lib
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na module Event::Lib
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-EventLib
-AnyEvent implementation based on EventLib (leaks memory and worse).
+AnyEvent implementation based on Event::Lib (leaks memory and worse).
+
+%description Impl-EventLib -l pl.UTF-8
+Implementacja AnyEvent oparta na module Event::Lib (ma wycieki pamięci
+i jeszcze gorzej).
 
 %package Impl-Glib
-Summary:	AnyEvent implementation based on Glib
+Summary:	AnyEvent implementation based on GLib
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na GLibie
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-Glib
-AnyEvent implementation based on Glib (slow but very stable).
+AnyEvent implementation based on GLib (slow but very stable).
+
+%description Impl-Glib -l pl.UTF-8
+Implementacja AnyEvent oparta na GLibie (wolna, ale stabilna).
 
 %package Impl-IOAsync
-Summary:	AnyEvent implementation based on IOAsync
+Summary:	AnyEvent implementation based on IO::Async
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na module IO::Async
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-IOAsync
 AnyEvent implementation based on IO::Async.
 
+%description Impl-IOAsync -l pl.UTF-8
+Implementacja AnyEvent oparta na module IO::Async.
+
 %package Impl-Irssi
 Summary:	AnyEvent implementation for Irssi
+Summary(pl.UTF-8):	Implementacja AnyEvent dla Irssi
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-Irssi
 AnyEvent implementation used when running within irssi.
 
+%description Impl-Irssi -l pl.UTF-8
+Implementacja AnyEvent używana wewnątrz irssi.
+
 %package Impl-POE
 Summary:	AnyEvent implementation based on POE
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na module POE
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-POE
 AnyEvent implementation based on POE (very slow, some limitations).
 
+%description Impl-POE -l pl.UTF-8
+Implementacja AnyEvent oparta na module POE (bardzo wolna, z
+ograniczeniami).
+
 %package Impl-Qt
 Summary:	AnyEvent implementation based on Qt
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na Qt
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-Qt
 AnyEvent implementation based on Qt.
 
+%description Impl-Qt -l pl.UTF-8
+Implementacja AnyEvent oparta na Qt.
+
 %package Impl-Tk
 Summary:	AnyEvent implementation based on Tk
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na Tk
 Group:		Development/Languages/Perl
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description Impl-Tk
 AnyEvent implementation based on Tk (very broken).
+
+%description Impl-Tk -l pl.UTF-8
+Implementacja AnyEvent oparta na Tk (z licznymi błędami).
 
 %prep
 %setup -q -n %{pnam}-%{version}
@@ -129,6 +161,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# Cocoa::EventLoop is OSX-only
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Cocoa.pm \
+	$RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Cocoa.3pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -152,11 +188,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/AnyEvent::[DFHSTU]*.3pm*
 %{_mandir}/man3/AnyEvent::Intro.3pm*
 %{_mandir}/man3/AnyEvent::Impl::Perl.3pm*
-
-%files Impl-Cocoa
-%defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Cocoa.pm
-%{_mandir}/man3/AnyEvent::Impl::Cocoa.3pm*
 
 %files Impl-EV
 %defattr(644,root,root,755)
