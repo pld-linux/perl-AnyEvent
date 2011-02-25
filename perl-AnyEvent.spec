@@ -11,7 +11,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	5.31
-Release:	5
+Release:	6
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
@@ -162,6 +162,8 @@ Implementacja AnyEvent oparta na Tk (z licznymi błędami).
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -175,6 +177,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changes README
+%dir %{perl_vendorlib}/AnyEvent
 %{perl_vendorarch}/AnyEvent.pm
 %dir %{perl_vendorarch}/AnyEvent
 %{perl_vendorarch}/AnyEvent/*.pm
