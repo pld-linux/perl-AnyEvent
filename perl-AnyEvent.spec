@@ -36,6 +36,18 @@ loop for a broad class of applications.
 Rozszerzenie AnyEvent ma za zadanie udostępnić pojedynczą i
 zoptymalizowaną pętlę zdarzeń dla szerokiej gamy aplikacji.
 
+%package IOAIO
+Summary:	IOAIO I/O model for AnyAvent module
+Summary(pl.UTF-8):	Model we/wy IOAIO dla modułu AnyEvent
+Group:		Development/Languages/Perl
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description IOAIO
+IOAIO I/O model for AnyAvent module.
+
+%description IOAIO -l pl.UTF-8
+Model we/wy IOAIO dla modułu AnyEvent.
+
 %package Impl-EV
 Summary:	AnyEvent implementation based on libev
 Summary(pl.UTF-8):	Implementacja AnyEvent oparta na libev
@@ -194,7 +206,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorarch}/AnyEvent
 %{perl_vendorarch}/AnyEvent/*.pm
 %dir %{perl_vendorarch}/AnyEvent/IO
-%{perl_vendorarch}/AnyEvent/IO/*.pm
+%{perl_vendorarch}/AnyEvent/IO/Perl.pm
 %dir %{perl_vendorarch}/AnyEvent/Impl
 # pureperl implementation, works everywhere, requires nothing
 %{perl_vendorarch}/AnyEvent/Impl/Perl.pm
@@ -209,6 +221,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/AnyEvent::IO*.3pm*
 %{_mandir}/man3/AnyEvent::Intro.3pm*
 %{_mandir}/man3/AnyEvent::Impl::Perl.3pm*
+
+%files IOAIO
+%defattr(644,root,root,755)
+%{perl_vendorarch}/AnyEvent/IO/IOAIO.pm
 
 %files Impl-EV
 %defattr(644,root,root,755)
