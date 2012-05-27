@@ -10,14 +10,14 @@
 Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
-Version:	5.31
-Release:	7
+Version:	7.01
+Release:	1
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
-# Source0-md5:	9c13447a7117e06e7a2fd553c4b2228c
+# Source0-md5:	f26c1d03d7f5fe7d82e6885e5887bf8f
 URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -73,6 +73,18 @@ AnyEvent implementation based on Event::Lib (leaks memory and worse).
 %description Impl-EventLib -l pl.UTF-8
 Implementacja AnyEvent oparta na module Event::Lib (ma wycieki pamięci
 i jeszcze gorzej).
+
+%package Impl-FLTK
+Summary:	AnyEvent implementation based on FLTK
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na FLTK
+Group:		Development/Languages/Perl
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description Impl-FLTK
+AnyEvent implementation based on FLTK (fltk 2 binding).
+
+%description Impl-FLTK -l pl.UTF-8
+Implementacja AnyEvent oparta na FLTK (wiązania fltk 2).
 
 %package Impl-Glib
 Summary:	AnyEvent implementation based on GLib
@@ -181,6 +193,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/AnyEvent.pm
 %dir %{perl_vendorarch}/AnyEvent
 %{perl_vendorarch}/AnyEvent/*.pm
+%dir %{perl_vendorarch}/AnyEvent/IO
+%{perl_vendorarch}/AnyEvent/IO/*.pm
 %dir %{perl_vendorarch}/AnyEvent/Impl
 # pureperl implementation, works everywhere, requires nothing
 %{perl_vendorarch}/AnyEvent/Impl/Perl.pm
@@ -191,7 +205,8 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/AE.pm
 %{_mandir}/man3/AE.3pm*
 %{_mandir}/man3/AnyEvent.3pm*
-%{_mandir}/man3/AnyEvent::[DFHSTU]*.3pm*
+%{_mandir}/man3/AnyEvent::[DFHLSTU]*.3pm*
+%{_mandir}/man3/AnyEvent::IO*.3pm*
 %{_mandir}/man3/AnyEvent::Intro.3pm*
 %{_mandir}/man3/AnyEvent::Impl::Perl.3pm*
 
@@ -209,6 +224,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{perl_vendorarch}/AnyEvent/Impl/EventLib.pm
 %{_mandir}/man3/AnyEvent::Impl::EventLib.3pm*
+
+%files Impl-FLTK
+%defattr(644,root,root,755)
+%{perl_vendorarch}/AnyEvent/Impl/FLTK.pm
+%{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
 
 %files Impl-Glib
 %defattr(644,root,root,755)
