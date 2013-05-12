@@ -3,6 +3,7 @@
 #
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
+%bcond_with	fltk	# don't package FLTK binding (requires a long chain of non-existing packages)
 #
 %include	/usr/lib/rpm/macros.perl
 %define		pdir	AnyEvent
@@ -11,7 +12,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	7.01
-Release:	1
+Release:	2
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
@@ -195,6 +196,11 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent
 %{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Cocoa.pm \
 	$RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Cocoa.3pm
 
+%if %{without fltk}
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/FLTK.pm
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -241,10 +247,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/AnyEvent/Impl/EventLib.pm
 %{_mandir}/man3/AnyEvent::Impl::EventLib.3pm*
 
+%if %{with fltk}
 %files Impl-FLTK
 %defattr(644,root,root,755)
 %{perl_vendorarch}/AnyEvent/Impl/FLTK.pm
 %{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
+%endif
 
 %files Impl-Glib
 %defattr(644,root,root,755)
