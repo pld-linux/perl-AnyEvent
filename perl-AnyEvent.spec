@@ -12,7 +12,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	7.07
-Release:	2
+Release:	3
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
