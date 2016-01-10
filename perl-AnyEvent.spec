@@ -4,6 +4,7 @@
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
 %bcond_with	fltk	# don't package FLTK binding (requires a long chain of non-existing packages)
+%bcond_with	qt	# don't package Qt3 binding
 #
 %include	/usr/lib/rpm/macros.perl
 %define		pdir	AnyEvent
@@ -12,7 +13,7 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	7.07
-Release:	3
+Release:	4
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
@@ -201,6 +202,11 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
 %endif
 
+%if %{without qt}
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Qt.pm
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Qt.3pm*
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -274,10 +280,12 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/AnyEvent/Impl/POE.pm
 %{_mandir}/man3/AnyEvent::Impl::POE.3pm*
 
+%if %{with qt}
 %files Impl-Qt
 %defattr(644,root,root,755)
 %{perl_vendorarch}/AnyEvent/Impl/Qt.pm
 %{_mandir}/man3/AnyEvent::Impl::Qt.3pm*
+%endif
 
 %files Impl-Tk
 %defattr(644,root,root,755)
