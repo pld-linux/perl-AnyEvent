@@ -3,8 +3,8 @@
 #
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
-%bcond_with	fltk	# don't package FLTK binding (requires a long chain of non-existing packages)
-%bcond_with	qt	# don't package Qt3 binding
+%bcond_with	fltk	# FLTK binding (requires a long chain of non-existing packages)
+%bcond_with	qt	# Qt3 binding
 #
 %include	/usr/lib/rpm/macros.perl
 %define		pdir	AnyEvent
@@ -12,15 +12,17 @@
 Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
-Version:	7.07
-Release:	4
+Version:	7.11
+Release:	1
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
-# Source0-md5:	e5ef99081b2acc3df80851838f9acfc4
+# Source0-md5:	1130bca8746121d035dbc13d52e14ebe
 URL:		http://search.cpan.org/dist/AnyEvent/
+BuildRequires:	perl-Canary-Stability
+BuildRequires:	perl-ExtUtils-MakeMaker >= 6.52
 BuildRequires:	perl-devel >= 1:5.8.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 Suggests:	%{name}-Impl-EV
@@ -173,12 +175,25 @@ AnyEvent implementation based on Tk (very broken).
 %description Impl-Tk -l pl.UTF-8
 Implementacja AnyEvent oparta na Tk (z licznymi błędami).
 
+%package Impl-UV
+Summary:	AnyEvent implementation based on UV
+Summary(pl.UTF-8):	Implementacja AnyEvent oparta na UV
+Group:		Development/Languages/Perl
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description Impl-UV
+AnyEvent implementation based on UV.
+
+%description Impl-UV -l pl.UTF-8
+Implementacja AnyEvent oparta na UV.
+
 %prep
 %setup -q -n %{pnam}-%{version}
 # we are not allowed to use network while building package
 %{__rm} t/05_dns.t
 
 %build
+PERL_CANARY_STABILITY_NOPROMPT=1 \
 %{__perl} Makefile.PL \
 	INSTALLDIRS=vendor
 %{__make}
@@ -291,3 +306,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{perl_vendorarch}/AnyEvent/Impl/Tk.pm
 %{_mandir}/man3/AnyEvent::Impl::Tk.3pm*
+
+%files Impl-UV
+%defattr(644,root,root,755)
+%{perl_vendorarch}/AnyEvent/Impl/UV.pm
+%{_mandir}/man3/AnyEvent::Impl::UV.3pm*
