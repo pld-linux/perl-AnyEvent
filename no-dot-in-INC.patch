@@ -1,0 +1,11 @@
+--- AnyEvent-7.13/Makefile.PL~	2016-09-17 04:32:17.000000000 +0200
++++ AnyEvent-7.13/Makefile.PL	2017-06-12 15:21:33.293400065 +0200
+@@ -22,7 +22,7 @@
+ 
+ EOF
+ 
+-do "constants.pl.PL"
++do "./constants.pl.PL"
+    or die "cannot execute constants.pl.PL: $@";
+ 
+ WriteMakefile(

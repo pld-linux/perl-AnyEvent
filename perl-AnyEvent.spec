@@ -13,13 +13,14 @@ Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
 Version:	7.13
-Release:	3
+Release:	4
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
 # Source0-md5:	70eea152cf4686f8f351aa8bc96157f9
+Patch0:		no-dot-in-INC.patch
 URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-Canary-Stability
 BuildRequires:	perl-ExtUtils-MakeMaker >= 6.52
@@ -189,6 +190,7 @@ Implementacja AnyEvent oparta na UV.
 
 %prep
 %setup -q -n %{pnam}-%{version}
+%patch0 -p1
 # we are not allowed to use network while building package
 %{__rm} t/05_dns.t
 
