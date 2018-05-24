@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
 %bcond_with	fltk	# FLTK binding (requires a long chain of non-existing packages)
-%bcond_with	qt	# Qt3 binding
+%bcond_with	qt3	# Qt3 binding
 #
 %include	/usr/lib/rpm/macros.perl
 %define		pdir	AnyEvent
@@ -18,7 +18,7 @@ Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/modules/by-authors/id/M/ML/MLEHMANN/%{pnam}-%{version}.tar.gz
+Source0:	http://www.cpan.org/modules/by-module/AnyEvent/%{pnam}-%{version}.tar.gz
 # Source0-md5:	37ac81d391986f31dc2b3a9161b4fba9
 URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-Canary-Stability
@@ -217,7 +217,7 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
 %endif
 
-%if %{without qt}
+%if %{without qt3}
 %{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Qt.pm
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Qt.3pm*
 %endif
@@ -295,7 +295,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorarch}/AnyEvent/Impl/POE.pm
 %{_mandir}/man3/AnyEvent::Impl::POE.3pm*
 
-%if %{with qt}
+%if %{with qt3}
 %files Impl-Qt
 %defattr(644,root,root,755)
 %{perl_vendorarch}/AnyEvent/Impl/Qt.pm
