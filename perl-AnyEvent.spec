@@ -1,5 +1,3 @@
-# TODO:
-# - incorrectly installs itself to perl_vendorarch, but only constants.pl should go there
 #
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
@@ -12,14 +10,15 @@
 Summary:	AnyEvent - provide framework for multiple event loops
 Summary(pl.UTF-8):	AnyEvent - szkielet dla wielu pętli zdarzeń
 Name:		perl-AnyEvent
-Version:	7.14
-Release:	6
+Version:	7.17
+Release:	1
 Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/AnyEvent/%{pnam}-%{version}.tar.gz
-# Source0-md5:	37ac81d391986f31dc2b3a9161b4fba9
+# Source0-md5:	7ac0d8f410061ec2a62c6ca9341f5fed
+Patch0:		%{name}-noarch.patch
 URL:		http://search.cpan.org/dist/AnyEvent/
 BuildRequires:	perl-Canary-Stability
 BuildRequires:	perl-ExtUtils-MakeMaker >= 6.52
@@ -27,6 +26,7 @@ BuildRequires:	perl-devel >= 1:5.8.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 Suggests:	%{name}-Impl-EV
 Obsoletes:	perl-AnyEvent-Impl-Cocoa
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # disable debuginfo, nothing special there
@@ -189,6 +189,7 @@ Implementacja AnyEvent oparta na UV.
 
 %prep
 %setup -q -n %{pnam}-%{version}
+%patch0 -p1
 # we are not allowed to use network while building package
 %{__rm} t/05_dns.t
 
@@ -209,16 +210,16 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent
 	DESTDIR=$RPM_BUILD_ROOT
 
 # Cocoa::EventLoop is OSX-only
-%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Cocoa.pm \
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent/Impl/Cocoa.pm \
 	$RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Cocoa.3pm
 
 %if %{without fltk}
-%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/FLTK.pm
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent/Impl/FLTK.pm
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
 %endif
 
 %if %{without qt3}
-%{__rm} $RPM_BUILD_ROOT%{perl_vendorarch}/AnyEvent/Impl/Qt.pm
+%{__rm} $RPM_BUILD_ROOT%{perl_vendorlib}/AnyEvent/Impl/Qt.pm
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/AnyEvent::Impl::Qt.3pm*
 %endif
 
@@ -228,20 +229,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changes README
+%{perl_vendorlib}/AnyEvent.pm
 %dir %{perl_vendorlib}/AnyEvent
-%{perl_vendorarch}/AnyEvent.pm
-%dir %{perl_vendorarch}/AnyEvent
-%{perl_vendorarch}/AnyEvent/*.pm
-%dir %{perl_vendorarch}/AnyEvent/IO
-%{perl_vendorarch}/AnyEvent/IO/Perl.pm
-%dir %{perl_vendorarch}/AnyEvent/Impl
+%{perl_vendorlib}/AnyEvent/*.pm
+%dir %{perl_vendorlib}/AnyEvent/IO
+%{perl_vendorlib}/AnyEvent/IO/Perl.pm
+%dir %{perl_vendorlib}/AnyEvent/Impl
 # pureperl implementation, works everywhere, requires nothing
-%{perl_vendorarch}/AnyEvent/Impl/Perl.pm
-%{perl_vendorarch}/AnyEvent/Util
-%{perl_vendorarch}/AnyEvent/FAQ.pod
-%{perl_vendorarch}/AnyEvent/Intro.pod
-%{perl_vendorarch}/AnyEvent/constants.pl
-%{perl_vendorarch}/AE.pm
+%{perl_vendorlib}/AnyEvent/Impl/Perl.pm
+%{perl_vendorlib}/AnyEvent/Util
+%{perl_vendorlib}/AnyEvent/FAQ.pod
+%{perl_vendorlib}/AnyEvent/Intro.pod
+%{perl_vendorlib}/AnyEvent/constants.pl
+%{perl_vendorlib}/AE.pm
 %{_mandir}/man3/AE.3pm*
 %{_mandir}/man3/AnyEvent.3pm*
 %{_mandir}/man3/AnyEvent::[DFHLSTU]*.3pm*
@@ -251,63 +251,63 @@ rm -rf $RPM_BUILD_ROOT
 
 %files IOAIO
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/IO/IOAIO.pm
+%{perl_vendorlib}/AnyEvent/IO/IOAIO.pm
 
 %files Impl-EV
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/EV.pm
+%{perl_vendorlib}/AnyEvent/Impl/EV.pm
 %{_mandir}/man3/AnyEvent::Impl::EV.3pm*
 
 %files Impl-Event
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Event.pm
+%{perl_vendorlib}/AnyEvent/Impl/Event.pm
 %{_mandir}/man3/AnyEvent::Impl::Event.3pm*
 
 %files Impl-EventLib
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/EventLib.pm
+%{perl_vendorlib}/AnyEvent/Impl/EventLib.pm
 %{_mandir}/man3/AnyEvent::Impl::EventLib.3pm*
 
 %if %{with fltk}
 %files Impl-FLTK
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/FLTK.pm
+%{perl_vendorlib}/AnyEvent/Impl/FLTK.pm
 %{_mandir}/man3/AnyEvent::Impl::FLTK.3pm*
 %endif
 
 %files Impl-Glib
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Glib.pm
+%{perl_vendorlib}/AnyEvent/Impl/Glib.pm
 %{_mandir}/man3/AnyEvent::Impl::Glib.3pm*
 
 %files Impl-IOAsync
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/IOAsync.pm
+%{perl_vendorlib}/AnyEvent/Impl/IOAsync.pm
 %{_mandir}/man3/AnyEvent::Impl::IOAsync.3pm*
 
 %files Impl-Irssi
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Irssi.pm
+%{perl_vendorlib}/AnyEvent/Impl/Irssi.pm
 %{_mandir}/man3/AnyEvent::Impl::Irssi.3pm*
 
 %files Impl-POE
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/POE.pm
+%{perl_vendorlib}/AnyEvent/Impl/POE.pm
 %{_mandir}/man3/AnyEvent::Impl::POE.3pm*
 
 %if %{with qt3}
 %files Impl-Qt
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Qt.pm
+%{perl_vendorlib}/AnyEvent/Impl/Qt.pm
 %{_mandir}/man3/AnyEvent::Impl::Qt.3pm*
 %endif
 
 %files Impl-Tk
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/Tk.pm
+%{perl_vendorlib}/AnyEvent/Impl/Tk.pm
 %{_mandir}/man3/AnyEvent::Impl::Tk.3pm*
 
 %files Impl-UV
 %defattr(644,root,root,755)
-%{perl_vendorarch}/AnyEvent/Impl/UV.pm
+%{perl_vendorlib}/AnyEvent/Impl/UV.pm
 %{_mandir}/man3/AnyEvent::Impl::UV.3pm*

@@ -1,0 +1,12 @@
+diff -ruN AnyEvent-7.17.orig/Makefile.PL AnyEvent-7.17/Makefile.PL
+--- AnyEvent-7.17.orig/Makefile.PL	2017-02-13 13:26:35.000000000 +0100
++++ AnyEvent-7.17/Makefile.PL	2019-10-28 03:17:03.007703628 +0100
+@@ -82,7 +82,7 @@
+         'lib/AnyEvent/Util.pm'           => '$(INST_LIB)/AnyEvent/Util.pm',
+         'lib/AnyEvent/Util/idna.pl'      => '$(INST_LIB)/AnyEvent/Util/idna.pl',
+         'lib/AnyEvent/Util/uts46data.pl' => '$(INST_LIB)/AnyEvent/Util/uts46data.pl',
+-        'lib/AnyEvent/constants.pl'      => '$(INST_ARCHLIB)/AnyEvent/constants.pl',
++        'lib/AnyEvent/constants.pl'      => '$(INST_LIB)/AnyEvent/constants.pl',
+     },
+ );
+ 
