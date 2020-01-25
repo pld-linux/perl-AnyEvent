@@ -4,7 +4,6 @@
 %bcond_with	fltk	# FLTK binding (requires a long chain of non-existing packages)
 %bcond_with	qt3	# Qt3 binding
 #
-%include	/usr/lib/rpm/macros.perl
 %define		pdir	AnyEvent
 %define		pnam	AnyEvent
 Summary:	AnyEvent - provide framework for multiple event loops
