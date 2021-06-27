@@ -18,18 +18,16 @@ Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/AnyEvent/%{pnam}-%{version}.tar.gz
 # Source0-md5:	7ac0d8f410061ec2a62c6ca9341f5fed
 Patch0:		%{name}-noarch.patch
-URL:		http://search.cpan.org/dist/AnyEvent/
+URL:		https://metacpan.org/dist/AnyEvent
 BuildRequires:	perl-Canary-Stability
 BuildRequires:	perl-ExtUtils-MakeMaker >= 6.52
 BuildRequires:	perl-devel >= 1:5.8.1
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.745
 Suggests:	%{name}-Impl-EV
 Obsoletes:	perl-AnyEvent-Impl-Cocoa
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# disable debuginfo, nothing special there
-%define		_enable_debug_packages	0
 
 %description
 The AnyEvent extension aims to provide an simple and optimized event
