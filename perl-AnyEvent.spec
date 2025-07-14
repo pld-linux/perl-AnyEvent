@@ -186,7 +186,7 @@ Implementacja AnyEvent oparta na UV.
 
 %prep
 %setup -q -n %{pnam}-%{version}
-%patch0 -p1
+%patch -P0 -p1
 # we are not allowed to use network while building package
 %{__rm} t/05_dns.t
 
