@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	tests	# do not perform "make test"
+%bcond_without	tests	# unit tests
 %bcond_with	fltk	# FLTK binding (requires a long chain of non-existing packages)
 %bcond_with	qt3	# Qt3 binding
 #
@@ -15,7 +15,7 @@ Epoch:		3
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/modules/by-module/AnyEvent/%{pnam}-%{version}.tar.gz
+Source0:	https://www.cpan.org/modules/by-module/AnyEvent/%{pnam}-%{version}.tar.gz
 # Source0-md5:	7ac0d8f410061ec2a62c6ca9341f5fed
 Patch0:		%{name}-noarch.patch
 URL:		https://metacpan.org/dist/AnyEvent
@@ -24,8 +24,8 @@ BuildRequires:	perl-ExtUtils-MakeMaker >= 6.52
 BuildRequires:	perl-devel >= 1:5.8.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.745
-Suggests:	%{name}-Impl-EV
-Obsoletes:	perl-AnyEvent-Impl-Cocoa
+Suggests:	%{name}-Impl-EV = %{epoch}:%{version}-%{release}
+Obsoletes:	perl-AnyEvent-Impl-Cocoa < 3:5.31-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
